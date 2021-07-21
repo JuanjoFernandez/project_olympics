@@ -41,7 +41,4 @@ function tabulate(data, columns) {
             .html(function(d) { return d.value; });
     
     return table;
-}
-
-// render the table
- var peopleTable = tabulate(data, ['Name', 'Rank']);
+};
