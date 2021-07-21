@@ -47,6 +47,11 @@ def year_query(year):
 
     return jsonify(start_list)
 
+# Country geoJSON
+# @app.route("/country")
+# def country_query():
+    
+#     return jsonify(country_list)
 
 if __name__ == "__main__":
     app.run(debug=True)
