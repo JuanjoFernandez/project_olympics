@@ -28,3 +28,6 @@ gdp_2000 float NOT NULL,
 gdp_2004 float NOT NULL,
 gdp_2008 float NOT NULL
 );
+
+SELECT * FROM sports;
+SELECT * FROM country;
