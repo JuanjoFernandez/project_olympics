@@ -34,7 +34,7 @@ def index():
 # Filter by year
 @app.route("/<year>")
 def year_query(year):
-    year_data = session.query(Sports.index, Sports.country_code, Sports.medal, Sports.medal_value)\
+    year_data = session.query(Sports.index, Sports.country_code, Sports.medal, Sports.medal_value, Sports.athlete, Sports.sport, Sports.gender)\
         .filter(Sports.year == int(year))
      # Building the dictionary
     row = 0
@@ -42,7 +42,10 @@ def year_query(year):
     for _ in year_data:
         start_list[year_data[row][0]] = {'countryCode': year_data[row][1], 
                                     'medal': year_data[row][2],
-                                    'medalValue': year_data[row][3]}
+                                    'medalValue': year_data[row][3],
+                                    'athlete': year_data[row][4],
+                                    'sport': year_data[row][5],
+                                    'gender': year_data[row][6]}
         row += 1
 
     return jsonify(start_list)
@@ -50,7 +53,7 @@ def year_query(year):
 # Country geoJSON
 # @app.route("/country")
 # def country_query():
-    
+        
 #     return jsonify(country_list)
 
 if __name__ == "__main__":
