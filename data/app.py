@@ -19,6 +19,7 @@ Base.prepare(engine, reflect=True)
 
 # Saving the country table
 Sports = Base.classes.sports
+Country = Base.classes.country
 
 session =Session(engine)
 
@@ -51,10 +52,20 @@ def year_query(year):
     return jsonify(start_list)
 
 # Country geoJSON
-# @app.route("/country")
-# def country_query():
-        
-#     return jsonify(country_list)
+@app.route("/country")
+def country_query():
+    country_data = session.query(Country.country, Country.country_code, Country.gdp_1960, Country.gdp_1964, Country.gdp_1968,
+    Country.gdp_1972, Country.gdp_1976, Country.gdp_1980, Country.gdp_1984, Country.gdp_1988, Country.gdp_1992, Country.gdp_1996,
+    Country.gdp_2000, Country.gdp_2004, Country.gdp_2008, Country.latitude, Country.longitude, Country.geometry)
+    row = 0
+    country_list = {}
+    for _ in country_data:
+        country_list[country_data[row][1]] = {'country':country_data[row][0], 'gdp_1960':country_data[row][2], 'gdp_1964':country_data[row][3], 'gdp_1968': country_data[row][4],
+        'gdp_1972': country_data[row][5], 'gdp_1976': country_data[row][6], 'gdp_1980': country_data[row][7], 'gdp_1984': country_data[row][8], 'gdp_1988': country_data[row][9],
+        'gdp_1992': country_data[row][10], 'gdp_1996': country_data[row][11], 'gdp_2000': country_data[row][12], 'gdp_2004': country_data[row][13], 'gdp_2008': country_data[row][14], 
+        'latitude':country_data[row][15], 'longitude':country_data[row][16], 'geometry': country_data[row][17]}
+        row += 1
+    return jsonify(country_list)
 
 if __name__ == "__main__":
     app.run(debug=True)
