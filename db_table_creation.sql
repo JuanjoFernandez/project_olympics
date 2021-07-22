@@ -26,5 +26,8 @@ gdp_1992 float NOT NULL,
 gdp_1996 float NOT NULL,
 gdp_2000 float NOT NULL,
 gdp_2004 float NOT NULL,
-gdp_2008 float NOT NULL
+gdp_2008 float NOT NULL,
+latitude float NOT NULL,
+longitude float NOT NULL,
+geometry VARCHAR
 );
