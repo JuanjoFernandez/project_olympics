@@ -72,19 +72,17 @@ def country_query():
 @app.route("/medals")
 def medals_query():
     print ("query started")
-    medals_info = session.query(Sports.index, Sports.country_code, Sports.medal, Sports.medal_value, Sports.athlete, Sports.sport, Sports.gender)
-    row =  0
+    row = 0
+    medals_info = session.query(Sports.country_code, Sports.year, func.sum(Sports.medal_value)).group_by(Sports.year, Sports.country_code).all()
+    
     medals_list = []
-    for _ in medals_info:
-        medals_list.append({'countryCode': medals_info[row][1], 
-                            'medal': medals_info[row][2],
-                            'medalValue': medals_info[row][3],
-                            'athlete': medals_info[row][4],
-                            'sport': medals_info[row][5],
-                            'gender': medals_info[row][6],
-                            'id': medals_info[row][0]})
-        row += 1        
+    for a in medals_info:
+        medals_list.append({'countryCode':a[0], 
+                            'year': a[1],
+                            'medalValue': a[2]})
+    
     return jsonify(medals_list)
+
         
 session.close()
 if __name__ == "__main__":
