@@ -1,4 +1,4 @@
-let queryUrl = "http://127.0.0.1:5000/medals";
+let queryUrl = "/medals";
 d3.json(queryUrl).then(function(data){
   console.log(data)
 // Themes begin
@@ -40,7 +40,7 @@ var stepDuration = 4000;
 
 var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
 categoryAxis.renderer.grid.template.location = 0;
-categoryAxis.dataFields.category = "country_code";//si no es country_code
+categoryAxis.dataFields.category = "countryCode"; //"country_code";//si no es country_code
 categoryAxis.renderer.minGridDistance = 1;
 categoryAxis.renderer.inversed = true;
 categoryAxis.renderer.grid.template.disabled = true;
@@ -52,8 +52,8 @@ valueAxis.rangeChangeDuration = stepDuration;
 valueAxis.extraMax = 0.1;
 
 var series = chart.series.push(new am4charts.ColumnSeries());
-series.dataFields.categoryY = "country_code";
-series.dataFields.valueX = "medals";
+series.dataFields.categoryY = "countryCode"; //"country_code";
+series.dataFields.valueX = "medalValue"; // "medals";
 series.tooltipText = "{valueX.value}"
 series.columns.template.strokeOpacity = 0;
 series.columns.template.column.cornerRadiusBottomRight = 5;
@@ -129,7 +129,7 @@ categoryAxis.sortBySeries = series;
 var years = [...new Set(data.map((m) => m.year))]
 allData = {}
     years.forEach((yr) => {
-  allData[yr] = data.filter((m) => m.year === yr).map((m) => ({'medals': m.medals, 'country': m.country}))
+  allData[yr] = data.filter((m) => m.year === yr).map((m) => ({'medals': m.medalValue, 'country': m.countryCode}))
 });
   
 chart.data = JSON.parse(JSON.stringify(allData[year]));
