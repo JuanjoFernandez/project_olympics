@@ -1,10 +1,10 @@
 # Libraries and dependencies
-
+from flask import render_template
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
-
+import json
 from flask import Flask, jsonify
 from config import password
 
@@ -23,7 +23,9 @@ Country = Base.classes.country
 
 session =Session(engine)
 
-app = Flask(__name__)
+app = Flask(__
+#telling Flask not to order alphabetically our json 
+app.config['JSON_SORT_KEYS'] = Falsename__)
 
 @app.route("/")
 def index():
@@ -60,12 +62,36 @@ def country_query():
     Country.gdp_2000, Country.gdp_2004, Country.gdp_2008, Country.latitude, Country.longitude, Country.geometry)
     row = 0
     country_list = []
+    #geometry = str(country_data[row][17])
     for _ in country_data:
-        country_list.append({'country_code':country_data[row][1],'country':country_data[row][0], 'gdp_1960':country_data[row][2], 'gdp_1964':country_data[row][3], 'gdp_1968': country_data[row][4],
-        'gdp_1972': country_data[row][5], 'gdp_1976': country_data[row][6], 'gdp_1980': country_data[row][7], 'gdp_1984': country_data[row][8], 'gdp_1988': country_data[row][9],
-        'gdp_1992': country_data[row][10], 'gdp_1996': country_data[row][11], 'gdp_2000': country_data[row][12], 'gdp_2004': country_data[row][13], 'gdp_2008': country_data[row][14], 
-        'latitude':country_data[row][15], 'longitude':country_data[row][16], 'geometry': country_data[row][17]})
+        country_list.append({   
+            'features':[
+                {
+                    'type': "Feature",
+                    'properties':{
+                        'country_code':country_data[row][1],
+                        'country':country_data[row][0], 
+                        'gdp_1960':country_data[row][2], 
+                        'gdp_1964':country_data[row][3], 
+                        'gdp_1968': country_data[row][4],
+                        'gdp_1972': country_data[row][5], 
+                        'gdp_1976': country_data[row][6], 
+                        'gdp_1980': country_data[row][7], 
+                        'gdp_1984': country_data[row][8],  
+                        'gdp_1988': country_data[row][9],
+                        'gdp_1992': country_data[row][10], 
+                        'gdp_1996': country_data[row][11], 
+                        'gdp_2000': country_data[row][12], 
+                        'gdp_2004': country_data[row][13], 
+                        'gdp_2008': country_data[row][14], 
+                        'latitude':country_data[row][15], 
+                        'longitude':country_data[row][16] 
+                    },
+                        'geometry':json.loads(country_data[row][17])
+                }],
+                })
         row += 1
+     
     return jsonify(country_list)
 
 # Medals info unfiltered
