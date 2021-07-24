@@ -26,5 +26,9 @@ After a long time under lockdown, we have decided to “get out” of the pertai
 [Sketch](readme_images\sketch.png)
 ![Inspo 1](readme_images/Inspo%201.png)
 
+### Presentation
+* [Slides](https://docs.google.com/presentation/d/1cqn5UhNSXmkXvAfl1NeGoS3MglIUvNuQ/edit#slide=id.p2/)
+
+
 
 
