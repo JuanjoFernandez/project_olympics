@@ -1,4 +1,4 @@
-// Useing the Flask Endpoints 
+// Using the Flask Endpoints 
 var link = "/country";
 var medals = "/medals";
 var year = d3.select(".dropdown-menu");
@@ -31,9 +31,6 @@ d3.json(medals).then(function(medalsData) {
        
   });
 
-
-
-
 // function getMap(){
 
 // Creating map object
@@ -53,6 +50,9 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(myMap);
 
 
+// Use this link to get the geojson data.
+var link = "/country";
+
 
 // Our style object
 var mapStyle = {
@@ -62,10 +62,6 @@ var mapStyle = {
   weight: 1.5
 };
 
-
-
-
-
 // Grabbing our GeoJSON data..
 d3.json(link).then(function(data) {
   // Creating a geoJSON layer with the retrieved data
@@ -73,6 +69,8 @@ d3.json(link).then(function(data) {
     // Passing in our style object
     style: mapStyle
   }).addTo(myMap);
+
 });
 
-//}
+});
+
