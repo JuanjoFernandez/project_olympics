@@ -1,0 +1,33 @@
+html,
+body{
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+#map {
+  width: 1320px;
+  height: 700px;
+  padding: 0;
+  margin: 0;
+}
+
+.legend {
+  padding: 10px;
+  line-height: 18px;
+  color: #555;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+body{
+  background: url(https://assets-global.website-files.com/5fa4da31b6c3a45d2cfd2d5d/5fa4da31b6c3a4d19efd406c_bigstock-136557293.jpeg);
+}
+#labels {
+  border:2px solid darkgray;
+  background-color: white;
+}
+nav{
+  background-color: white;
+}
