@@ -16,15 +16,15 @@ After a long time under lockdown, we have decided to “get out” of the pertai
 ### Inspiration Visualizations
 | Olympics Dashboard |
 | --- |
-![Inspo 2](Initial%20Images/Inspo%202.png)
+![Inspo 2](readme_images/Inspo%202.png)
 
 | Climate Dashboard |
 | --- |
-![Inspo 3](Initial%20Images/Inspo%203.png)
+![Inspo 3](readme_images/Inspo%203.png)
 
 ### Final Design 
-[Sketch](https://github.com/Yazz-01/project_olympics/blob/main/sketch.png)
-![Inspo 1](Initial%20Images/Inspo%201.png)
+[Sketch](readme_images\sketch.png)
+![Inspo 1](readme_images/Inspo%201.png)
 
 
 
