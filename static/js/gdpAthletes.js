@@ -1,357 +1,88 @@
-// --------D3 TOP 10 ATHLETS-------- & TRANSITION TO GPD PER COUNTRY
-// // API url
+// var url = "/medals";
 
 
-
-var obj = [
-    { 'name': 'P1', 'value': 150 },
-    { 'name': 'P1', 'value': 150 },
-    { 'name': 'P2', 'value': 200 },
-    { 'name': 'P3', 'value': 450 }
-];
-var holder = {};
-obj.forEach(function(d) {
-    if (holder.hasOwnProperty(d.name)) {
-        holder[d.name] = holder[d.name] + d.value;
-    } else {
-        holder[d.name] = d.value;
-    }
-});
-var obj2 = [];
-for (var prop in holder) {
-    obj2.push({ name: prop, value: holder[prop] });
-}
-console.log(obj2);
-
-
-
-
-
-
-
-
-function getResultsGDP() {
-
-    let buscar_tipo = d3.select("#buscarTipo").property("value")
-
-    d3.json(`"/country/gdp"/${buscar_tipo}`).then(json => {
-
-        let selection = d3
-            .select("#rcontainer")
-            .selectAll("li")
-            .data(json)
-
-        selection
-            .enter()
-            .append("li")
-            .merge(selection)
-            .text(d => d.desc)
-
-        selection.exit().remove()
-
-    })
-}
-
-function insertTodo() {
-    let texto = d3.select("#todo").property("value")
-    let tipo = d3.select("#tipoTodo").property("value")
-
-    nuevo_dato = {
-        "texto": texto,
-        "tipo": tipo
-    }
-
-    let configOption = {
-        method: "POST",
-        body: JSON.stringify(nuevo_dato),
-        headers: {
-            "Content-type": "application/json"
-        }
-    }
-
-    d3.json("/api/insert", configOption).then(json => {
-        console.log(json)
-        getResultsGDP()
-    })
-
-}
-
-getResultsGDP();
-d3.select("#buscarTipo").on("change", getResultsGDP);
-d3.select("#addTodo").on("click", insertTodo);
-
-
-
-
-
-
-
-// var obj = [
-//     { 'name': 'P1', 'value': 150 },
-//     { 'name': 'P1', 'value': 150 },
-//     { 'name': 'P2', 'value': 200 },
-//     { 'name': 'P3', 'value': 450 }
-// ];
-// var holder = {};
-// obj.forEach(function(d) {
-//     if (holder.hasOwnProperty(d.name)) {
-//         holder[d.name] = holder[d.name] + d.value;
-//     } else {
-//         holder[d.name] = d.value;
-//     }
+// d3.json(url).then(function (medalsData) {
+//   medalsData.forEach(function(data){
+//   var medalValues = data.medalValue; 
+//   console.log(medalValues);
+//   })
 // });
-// var obj2 = [];
-// for (var prop in holder) {
-//     obj2.push({ name: prop, value: holder[prop] });
-// }
-// console.log(obj2);
+
+// dataset = d3.json(url).then(function(data){
+//   array1 = [];
+//   for (var i=0; i<data.length; i++) {
+//       array1.push(data.medalValue);
+//        console.log(data.medalValue);
+//   }
+
+// // dataset1 = [8, 18, 7, 10, 19, 20, 10, 10, 6, 19, 17, 18, 23, 23, 13, 12, 15, 6, 9, 8]
+// w = 600
+// h = 250
+// //dataset = dataset1.slice(0, 10);
+// dataset.sort(function(a, b){return b-a});
 
 
+// var svgHeight = 400;
+// var svgWidth = 1000;
+
+// var margin = {
+//   top: 50,
+//   right: 50,
+//   bottom: 50,
+//   left: 50
+// };
+
+// var chartHeight = svgHeight - margin.top - margin.bottom;
+// var chartWidth = svgWidth - margin.left - margin.right;
+
+// // xScale will help us set the x position of the bars
+// var xScale = d3.scaleBand() //Ordinal scale
+//            .domain(d3.range(dataset.length)) //sets the input domain for the scale
+//            .rangeRound([0, w]) //enables rounding of the range
+//            .paddingInner(0.05); //spacing between each bar
+
+// //yScale will help us map data to the height of bars in the barchart
+// var yScale = d3.scaleLinear()
+// 					 .domain([0, d3.max(dataset)]) //sets the upper end of the input domain to the largest data value in dataset
+// 					 .range([0, h]);
 
 
+//            //Create SVG element
+// var svg = d3.select('#svg-area')
+// .append("svg")
+// .attr("width", w)
+// .attr("height", h);  
 
+// // shift everything over by the margins
+// var chartGroup = svg.append("g")
+//   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+// var yAxis = d3.axisLeft(yScale);
+// var xAxis = d3.axisBottom(xScale);
 
+// chartGroup.append("g")
+//   .attr("transform", `translate(0, ${chartHeight})`)
+//   .call(xAxis);
 
-// // // set the dimensions of the canvas
-// // var margin = { top: 20, right: 20, bottom: 70, left: 40 },
-// //     width = 600 - margin.left - margin.right,
-// //     height = 300 - margin.top - margin.bottom;
+// chartGroup.append("g")
+//   .call(yAxis);
 
-
-// // // set the ranges
-// // var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
-
-// // var y = d3.scale.linear().range([height, 0]);
-
-// // // define the axis
-// // var xAxis = d3.svg.axis()
-// //     .scale(x)
-// //     .orient("bottom")
-
-
-// // var yAxis = d3.svg.axis()
-// //     .scale(y)
-// //     .orient("left")
-// //     .ticks(10);
-
-
-// // // add the SVG element
-// // var svg = d3.select("body").append("svg")
-// //     .attr("width", width + margin.left + margin.right)
-// //     .attr("height", height + margin.top + margin.bottom)
-// //     .append("g")
-// //     .attr("transform",
-// //         "translate(" + margin.left + "," + margin.top + ")");
-
-
-// // // load the data from SlashDB via a RESTful API to the resource for the SQL Pass-thru (query)
-// // d3.json("http://demo.slashdb.com/query/sales-by-year.json", function(error, data) {
-
-// //     data.forEach(function(d) {
-// //         d.Year = d.Year;
-// //         d.Total = +d.Total;
-// //     });
-
-// //     // scale the range of the data
-// //     x.domain(data.map(function(d) { return d.Year; }));
-// //     y.domain([0, d3.max(data, function(d) { return d.Total; })]);
-
-// //     // add axis
-// //     svg.append("g")
-// //         .attr("class", "x axis")
-// //         .attr("transform", "translate(0," + height + ")")
-// //         .call(xAxis)
-// //         .selectAll("text")
-// //         .style("text-anchor", "end")
-// //         .attr("dx", "-.8em")
-// //         .attr("dy", "-.55em")
-// //         .attr("transform", "rotate(-90)");
-
-// //     svg.append("g")
-// //         .attr("class", "y axis")
-// //         .call(yAxis)
-// //         .append("text")
-// //         .attr("y", -16)
-// //         .attr("dy", ".71em")
-// //         .style("text-anchor", "end")
-// //         .text("Sales");
-
-
-// //     // Add bar chart
-// //     svg.selectAll("bar")
-// //         .data(data)
-// //         .enter().append("rect")
-// //         .attr("class", "bar")
-// //         .attr("x", function(d) { return x(d.Year); })
-// //         .attr("width", x.rangeBand() - 20)
-// //         .attr("y", function(d) { return y(d.Total); })
-// //         .attr("height", function(d) { return height - y(d.Total); });
-
+// //Create bars
+// svg.selectAll("rect")
+//   .data(dataset)
+//   .enter()
+//   .append("rect")
+//   .attr("x", function(d, i) { // position in x-axis
+//     return xScale(i); // we will pass the values from the dataset
+//   })
+//   .attr("y", function(d) {
+//     return h - yScale(d);
+//   })
+//   .attr("width", xScale.bandwidth()) //Asks for the bandwith of the scale
+//   .attr("height", function(d) {
+//     return yScale(d);
+//   })
+//   .attr("fill", function(d) {
+//     return "rgb("+ Math.round(d * 8) + ",0," + Math.round(d * 10) + ")"; //Change the color of the bar depending on the value
+//   });
 // // });
-
-// // // if (err) throw err;
-
-// // // athlete_list = [];
-
-// // //     sum = 0;
-// // //     for (var j = 0; j < data.length; j++) {
-// // //         console.log(data[j]);
-// // //     };
-// // // }).catch(function(data) {
-// // //     console.log(data);
-// // //});
-
-// // // function doSomething(success){
-// // //     //do whatever you like
-// // //   }
-// // //   fetch('http://127.0.0.1:5000/1948')
-// // //      .then(data => data.json())
-// // //      .then(success => doSomething(success));
-
-// // // // var urlList = [];
-// // // var url = ("http://127.0.0.1:5000/1948");
-
-// // // d3.json("url").then((athleteData) => {
-// // //     window.athleteData = athleteData;
-// // //     console.log(athleteData);
-// // //     //Looping through the array
-// // //     for (var j = 0; j < athleteData.length; j++) {
-// // //         console.log(athleteData[j]);
-// // //     }
-// // // });
-
-// // //         // // // CREATE ATHLETS OBJECT
-// // //         // var athletes= [];
-
-
-
-// // //         // if athletes.find((d) => d.)
-// // //     athletes.append(medal_value)
-// // // else:
-// // //     name= athlets
-// // //     value= medal_value
-
-
-// // // // TO CREATE A TABLE WITH THE DATA
-// // // $scope.sum = 0;
-// // // angular.forEach($scope.data, function(value, key){
-// // //   $scope.sum += value.age
-// // // })
-
-
-
-
-
-// // // chart.orderByRank = function() {
-// // //     d3.selectAll('.album')
-// // //     .transition(700)
-// // //     .attr('fill', 'url(#warmGradient)')
-// // //     .attr('transform', function(d){
-// // //       return 'translate(0,' + (d.rank - 1) * (barHeight + barMargin) + ')';
-// // //     });
-
-// // //     return chart;
-// // //   };
-
-// // //   chart.orderByPlayCount = function() {
-// // //     d3.selectAll('.album')
-// // //     .transition(700)
-// // //     .attr('fill', 'url(#coolGradient)')
-// // //     .attr('transform', function(d, i){
-// // //       return 'translate(0,' + i * (barHeight + barMargin) + ')';
-// // //     });
-
-// // //     return chart;
-// // //   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // // d3.json(url, function(err, data) {
-// // //             if (err) throw err;
-
-// // //             d3.select("tbody")
-// // //                 .selectAll("tr")
-// // //                 .data(data) // binding function
-// // //                 .enter() // THIS FUNCTIONS ITERATE BY THEIR OWN
-// // //                 .append("tr")
-// // //                 // HTML FUNCTION helps to add the data to each column in the table
-// // //                 .html(function(d) {
-// // //                     return `<td>${d.date}</td><td>${d.low}</td><td>${d.high}</td>`;
-// // //                 });
-// // // LISTENER ACCORDING TO DROP DOWN MENU d3.json
-// // //d3.select("")
-
-// // // // BINDING DATA SUBSTITUTING THE VALUE OF THE ELEMENT one to one
-// // // d3.select("ul").selectAll("li")
-// // //     .data(arr) // BINDING THE DATA
-// // //     .text((d) => `score: ${d}`) // ADDING THIS TEXT
-
-
-// // // d3.select("ul").selectAll("li")
-// // //     .data(arr) // BINDING THE DATA
-// // //     .enter() // enter function SELECT THE DATA THAT HASN´T BEEING MAP- grab elements that werent binded-
-// // //     .append("li")
-// // //     .text((d) => `New Score: ${d}`) // ADDIN THE NEW DATA OR FUNCTION
-
-// // // // REMOVE THE ELEMENTS THAT WERENT BINDED - DELETE
-// // // d3.select("ul").selectAll("li")
-// // //     .data(arr)
-// // //     .exit() // GRAB THE ADDIONAL HTLM ELEMENTS THAT DIDNT GET BINDED
-// // //     .remove(); // REMOVES THESE ELEMENTS DELETING THEM
-
-
-// // // var array2 = [1, 2, 3, 4, 5, 6]
-
-// // // d3.select("ul").selectAll("li")
-// // //     .data(array2)
-// // //     .text((d) => d * d); // CRETING A FUNCTION FOR A SQUARE- changing the value into the square of the elments
-
-// // // d3.select("ul").selectAll("li")
-// //     .data(array2)
-// //     .enter() // ENTER ON THE SELECTION WILL GRAB THE DATA POINTS WERENT SHOWN IN MY SELECTION
-// //     .append("li")
-// //     .text((d) => d)
-// //     .style("color", "red");
-
-
-// // d3.select(".img-gallery").selectAll("div") // SELECT THE DATA FROM THE HTML - THERE ARE NO DIV, BUT 
-
-// // .classed("col-md-4 thumbnail", true)
-// //     .html((d) => `<img src="${d.url}">`)
-
-
-// // d3.select(".img-gallery").selectAll("div")
-// //     .data(complexData) // BINDING SELECTING = 3 OBJETS
-// //     .enter() // entering in the UNBINNED DATA
-// //     .append("div") // SLECTION = "NEW DIV" WITH 1 OBJECT BINDED
-// //     .classed("col-md-4 thumbnail", true) //ADD CLASES SELECTION= "NEW DIV" WITH 1 OBJECT BINDED
-// //     .html((d) => `<img src="${d.url}">`) //SLECTION ="NEW DIV" WITH 1 OBJECT BINDED
-// //     .append("p") // SLECTION= "NEW p INSIDE A div" with 1 object binded
-// //     .text((d) => d.title)
-// //     .classed("h3 text-center", true);
-
-
-
-
-// });
-
-
-// d3.select("ul").selectAll("li")
-//     .each(function(d.i) {
-//         console.log("element", this);
-//         console.log("data", d);
-//         console.log("index", i);
-//     });

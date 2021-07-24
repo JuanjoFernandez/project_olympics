@@ -20,6 +20,7 @@ Base.prepare(engine, reflect=True)
 # Saving the country table
 Sports = Base.classes.sports
 Country = Base.classes.country
+GeoData = Base.classes.geodata
 
 session =Session(engine)
 
@@ -60,6 +61,7 @@ def country_query():
     country_data = session.query(Country.country, Country.country_code, Country.gdp_1960, Country.gdp_1964, Country.gdp_1968,
     Country.gdp_1972, Country.gdp_1976, Country.gdp_1980, Country.gdp_1984, Country.gdp_1988, Country.gdp_1992, Country.gdp_1996,
     Country.gdp_2000, Country.gdp_2004, Country.gdp_2008, Country.latitude, Country.longitude, Country.geometry)
+    
     row = 0
     country_list = []
     #geometry = str(country_data[row][17])
@@ -93,6 +95,35 @@ def country_query():
         row += 1
      
     return jsonify(country_list)
+
+# Country geoJSON
+
+@app.route("/geoData")
+def countryMedals_query():
+    geoData = session.query(GeoData.country_code, GeoData.latitude, GeoData.longitude, GeoData.sport, GeoData.athlete, GeoData.gender, func.sum(GeoData.medal_value),).group_by(GeoData.country_code).all()
+    
+    row = 0
+    geodata_list  = []
+    #geometry = str(country_data[row][17])
+    for _ in geoData:
+         geodata_list.append({   
+            'features':[
+                {
+                    'type': "Feature",
+                    'properties':{
+                        'country_code':geoData [row][0],
+                        'medal_sum':geoData [row][6], 
+                        'latitude':geoData [row][1], 
+                        'longitude':geoData [row][2],
+                        'sport':geoData [row][3],
+                        'athlete':geoData [row][4],
+                        'gender':geoData [row][5] 
+                    },
+                }],
+                })
+         row += 1
+     
+    return jsonify(geodata_list)
 
 # Medals info unfiltered
 @app.route("/medals")

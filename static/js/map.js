@@ -1,12 +1,9 @@
 
-
 // year.on("change",getMap); 
 
 // var medalValuesFill = d3.json(medals).then(function (data) {
 //   medalValues = data.medalValue; 
 // });
-
-function medalsColor(medalValue) {
 
   // Using the Flask Endpoints 
 var link = "/country";
@@ -51,10 +48,14 @@ var year = d3.select(".dropdown-menu");
 
 
   // Creating map object
-  var myMap = L.map("map", {
+  var myMap = L.map("map", { 
     center: [22.09, -36.10],
     zoom: 2
   });
+
+  function onEachFeature(feature, layer) {
+    layer.bindPopup("<h3>" + "Location: " +feature.properties.country);
+  }
 
   // Adding tile layer
   L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -69,8 +70,8 @@ var year = d3.select(".dropdown-menu");
 
   // Our style object
   var mapStyle = {
-   //  color: "gray", // perimeter 
-    fillColor: values,
+    color: "white", // perimeter 
+    fillColor: "gray",
     fillOpacity: 0.8,
     weight: 1
   };
@@ -80,12 +81,7 @@ var year = d3.select(".dropdown-menu");
     // Creating a geoJSON layer with the retrieved data
     L.geoJson(data, {
       // Passing in our style object
-      onEachFeature: medalsColor(medalsValue), 
       style: mapStyle
     }).addTo(myMap);
 
   });
-
-}
-
-medalsColor();
