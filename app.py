@@ -137,6 +137,34 @@ def medals_query():
     
     return jsonify(medals_list)
 
+# Choropleth GEOJson
+@app.route("/choro")
+def choro_query():
+    country_data = session.query(Country.country_code, Country.latitude, Country.longitude, Country.geometry, func.sum(Sports.medal_value))\
+        .join(Sports.country_code).group_by(Sports.country_code).all
+    
+    row = 0
+    country_list = []
+    #geometry = str(country_data[row][17])
+    for _ in country_data:
+        country_list.append({   
+            'features':[
+                {
+                    'type': "Feature",
+                    'properties':{
+                        'country_code':country_data[row][0],
+                        'latitude':country_data[row][1],
+                        'longitude':country_data[row][2],
+                        'medal_score': country_data[row][4]
+                        
+                    },
+                        'geometry':json.loads(country_data[row][3])
+                }],
+                })
+        row += 1
+     
+    return jsonify(country_list)
+
         
 session.close()
 if __name__ == "__main__":
