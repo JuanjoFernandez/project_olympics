@@ -31,8 +31,8 @@ app.config['JSON_SORT_KEYS'] = Falsename__)
 def index():
     print("Server received request for 'Home' page...")
     #print(country)
-    return (f"<h1>Home page for the Olympics dashboard API, available routes:</h1></br>")
-    
+    #return (f"<h1>Home page for the Olympics dashboard API, available routes:</h1></br>")
+    return render_template("index.html")
 
 # Filter by year
 @app.route("/<year>")
