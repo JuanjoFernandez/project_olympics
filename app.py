@@ -23,9 +23,9 @@ Country = Base.classes.country
 
 session =Session(engine)
 
-app = Flask(__
-#telling Flask not to order alphabetically our json 
-app.config['JSON_SORT_KEYS'] = Falsename__)
+app = Flask(__name__)
+#telling Flask not to order alphabetically our json
+app.config['JSON_SORT_KEYS'] = False
 
 @app.route("/")
 def index():
