@@ -96,11 +96,11 @@ def country_query():
      
     return jsonify(country_list)
 
-# Country geoJSON
-
+# geoData for Leaflet
 @app.route("/geoData")
 def countryMedals_query():
-    geoData = session.query(GeoData.country_code, GeoData.latitude, GeoData.longitude, GeoData.sport, GeoData.athlete, GeoData.gender, func.sum(GeoData.medal_value),).group_by(GeoData.country_code).all()
+    geoData = session.query(GeoData.country_code, GeoData.latitude, GeoData.longitude, func.sum(GeoData.medal_value))\
+        .group_by(GeoData.country_code, GeoData.latitude, GeoData.longitude).all()
     
     row = 0
     geodata_list  = []
@@ -112,13 +112,10 @@ def countryMedals_query():
                     'type': "Feature",
                     'properties':{
                         'country_code':geoData [row][0],
-                        'medal_sum':geoData [row][6], 
                         'latitude':geoData [row][1], 
                         'longitude':geoData [row][2],
-                        'sport':geoData [row][3],
-                        'athlete':geoData [row][4],
-                        'gender':geoData [row][5] 
-                    },
+                        'medal_sum':geoData [row][3], 
+                        },
                 }],
                 })
          row += 1

@@ -31,3 +31,15 @@ latitude float NOT NULL,
 longitude float NOT NULL,
 geometry VARCHAR
 );
+
+CREATE TABLE geodata (
+	index SERIAL PRIMARY KEY,
+	year INT NOT NULL,
+	sport VARCHAR NOT NULL,
+    athlete VARCHAR NOT NULL,
+	country_code VARCHAR NOT NULL,
+	gender VARCHAR NOT NULL,
+	medal_value INT NOT NULL,
+	latitude varchar not NULL,
+	longitude varchar not null
+);
