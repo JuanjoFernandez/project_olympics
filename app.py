@@ -10,7 +10,7 @@ from config import password
 
 # Create an engine that allow us to to communicate with the database
 engine = create_engine(f'postgresql://postgres:{password}@localhost:5432/project_olympics')
-
+conn = engine.connect()
 # Reflect an existing database into a new model
 Base = automap_base()
 
@@ -148,7 +148,15 @@ def scatter_query():
                             'gdp_2008': a[1],
                             'medalValue': a[2]})
     return jsonify(scatter_list)
-    
+
+@app.route("/athlete")
+def athletes_query():
+    print ("query started")
+    import pandas as pd
+    athelete_info = pd.read_sql('SELECT athlete, country_code, SUM (medal_value) as totalmedals FROM Sports GROUP BY athlete, country_code', conn)
+    athlete_list =  athelete_info.to_dict('records')
+    return jsonify(athlete_list)
+
         
 session.close()
 if __name__ == "__main__":

@@ -1,88 +1,64 @@
-// var url = "/medals";
+var medals= '/athlete';
+d3.json(medals).then(function (data) {
+// console.log(data);
+
+xvalues = []; 
+yvalues = [];
+labels = [];
+
+for (var i = 0; i < data.length; i++) {
+  xvalues.push(data[i].athlete); 
+  yvalues.push(data[i].totalmedals); 
+  labels.push(data[i].country_code); 
+}; 
+
+var dataArray = []; 
+var row = 0; 
+xvalues.forEach(x => {
+  dataArray.push([xvalues[row], yvalues[row], labels[row]]); 
+  row++; 
+})
+
+var sortedArr = dataArray.sort(function compareFunction(firstNum, secondNum) {
+  return secondNum[1] - firstNum[1];
+});
+
+var slicedArr = sortedArr.slice(0,20);
+
+//console.log(slicedArr); 
 
 
-// d3.json(url).then(function (medalsData) {
-//   medalsData.forEach(function(data){
-//   var medalValues = data.medalValue; 
-//   console.log(medalValues);
-//   })
-// });
+// Create the Trace for the Bar Chart 
+var trace = {
+  x: slicedArr.map(function(value, index){return value[0];}),
+  marker:{color: ["#ffd700","#ffd700","#ffd700",
+                  "#ddcd76","#ddcd76","#ddcd76",
+                  "#c0c0c0","#c0c0c0","#c0c0c0",
+                  "#cd7f32","#cd7f32","#cd7f32",
+                  "#c3c3c3c","#c3c3c3c","#c3c3c3c", 
+                  "#777676", "#777676", "#777676", 
+                  "#777676", "#777676"
+  ]  
+  }, 
+  y: slicedArr.map(function(value, index){return value[1];}),
+  type: "bar",
+  text: slicedArr.map(function(value, index){return value[2];})
+};
+var dataBar = [trace];
 
-// dataset = d3.json(url).then(function(data){
-//   array1 = [];
-//   for (var i=0; i<data.length; i++) {
-//       array1.push(data.medalValue);
-//        console.log(data.medalValue);
-//   }
+// Define the plot layout
+var layoutBar = {
+title: "Top Athletes",
+titlefont: {size: 24},
+xaxis: {
+  tickangle: -45
+}, 
+yaxis:{
+  title: "Medals per Athlete"
+}
+};
 
-// // dataset1 = [8, 18, 7, 10, 19, 20, 10, 10, 6, 19, 17, 18, 23, 23, 13, 12, 15, 6, 9, 8]
-// w = 600
-// h = 250
-// //dataset = dataset1.slice(0, 10);
-// dataset.sort(function(a, b){return b-a});
+// Plot the chart to a div tag with id "bar"
+Plotly.newPlot("svg-area", dataBar, layoutBar);
 
-
-// var svgHeight = 400;
-// var svgWidth = 1000;
-
-// var margin = {
-//   top: 50,
-//   right: 50,
-//   bottom: 50,
-//   left: 50
-// };
-
-// var chartHeight = svgHeight - margin.top - margin.bottom;
-// var chartWidth = svgWidth - margin.left - margin.right;
-
-// // xScale will help us set the x position of the bars
-// var xScale = d3.scaleBand() //Ordinal scale
-//            .domain(d3.range(dataset.length)) //sets the input domain for the scale
-//            .rangeRound([0, w]) //enables rounding of the range
-//            .paddingInner(0.05); //spacing between each bar
-
-// //yScale will help us map data to the height of bars in the barchart
-// var yScale = d3.scaleLinear()
-// 					 .domain([0, d3.max(dataset)]) //sets the upper end of the input domain to the largest data value in dataset
-// 					 .range([0, h]);
-
-
-//            //Create SVG element
-// var svg = d3.select('#svg-area')
-// .append("svg")
-// .attr("width", w)
-// .attr("height", h);  
-
-// // shift everything over by the margins
-// var chartGroup = svg.append("g")
-//   .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
-// var yAxis = d3.axisLeft(yScale);
-// var xAxis = d3.axisBottom(xScale);
-
-// chartGroup.append("g")
-//   .attr("transform", `translate(0, ${chartHeight})`)
-//   .call(xAxis);
-
-// chartGroup.append("g")
-//   .call(yAxis);
-
-// //Create bars
-// svg.selectAll("rect")
-//   .data(dataset)
-//   .enter()
-//   .append("rect")
-//   .attr("x", function(d, i) { // position in x-axis
-//     return xScale(i); // we will pass the values from the dataset
-//   })
-//   .attr("y", function(d) {
-//     return h - yScale(d);
-//   })
-//   .attr("width", xScale.bandwidth()) //Asks for the bandwith of the scale
-//   .attr("height", function(d) {
-//     return yScale(d);
-//   })
-//   .attr("fill", function(d) {
-//     return "rgb("+ Math.round(d * 8) + ",0," + Math.round(d * 10) + ")"; //Change the color of the bar depending on the value
-//   });
-// // });
+});

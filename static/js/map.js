@@ -28,8 +28,8 @@ function createMarkers(data) {
         fillOpacity: 0.7,
         radius: 200000 + (data[i].features[0].properties.medal_sum * 100)
       }).bindPopup(
-        "<h1>" + data[i].features[0].properties.country_code + "</h1>" + "<hr>" +
-        "<h2>" + data[i].features[0].properties.medal_sum + "</h2>"
+        "<h2> Country: " + data[i].features[0].properties.country_code + "</h2>" + "<hr>" +
+        "<h3>" + data[i].features[0].properties.medal_sum + " Total Medals </h3>"
       )
     )
   }
