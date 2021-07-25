@@ -23,8 +23,7 @@ After a long time under lockdown, we have decided to “get out” of the pertai
 ![Inspo 3](readme_images/Inspo%203.png)
 
 ### Final Design 
-[Sketch](readme_images\sketch.png)
-![Inspo 1](readme_images/Inspo%201.png)
+![Inspo 1](readme_images/image.png)
 
 ### Presentation
 * [Slides](https://docs.google.com/presentation/d/1cqn5UhNSXmkXvAfl1NeGoS3MglIUvNuQ/edit#slide=id.p2/)
