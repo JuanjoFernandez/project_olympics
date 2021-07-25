@@ -24,9 +24,13 @@ After a long time under lockdown, we have decided to “get out” of the pertai
 
 ### Final Design 
 ![Inspo 1](readme_images/image.png)
+This is our final visualization, which is interactive, feel free to check our map, our athletes, and our scatter plot, in which you can move your mouse to see countries, years, and more. 
 
-### Presentation
+### Class Presentation
 * [Slides](https://docs.google.com/presentation/d/1cqn5UhNSXmkXvAfl1NeGoS3MglIUvNuQ/edit#slide=id.p2/)
+
+### Conclusions 
+As visualizaed in our data, GDP does present a high and positive relation in the amount of medals the country has. As expected, those countries with high GDP's such as USA and China hold a vast amount of medals. Like in most times when it comes to analyzing data, we do have outliers that break that rule, for example Qatar and Luxemburg have high GDP's and little to no medals.  Also, in our Top Athletes Dataframe, gender does play a role, since the majority of athletes with most medals are in fact men, nevertheless the second most medals, is a woman. 
 
 
 
